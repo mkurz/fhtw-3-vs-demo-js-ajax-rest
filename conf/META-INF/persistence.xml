@@ -1,0 +1,33 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+			 version="2.1">
+
+	<persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<non-jta-data-source>DefaultDS</non-jta-data-source>
+		<validation-mode>NONE</validation-mode>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+			<!-- <property name="hibernate.create_empty_composites.enabled" value="true" /> -->
+			<property name="hibernate.show_sql" value="false" /><!-- Use org.hibernate.SQL logger instead -->
+			<!-- You can set "hibernate.format_sql" via a config in application.conf -->
+			<property name="hibernate.auto_quote_keyword" value="false" />
+			<property name="hibernate.globally_quoted_identifiers" value="false" />
+			<property name="hibernate.implicit_naming_strategy" value="org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl" />
+
+
+			<!-- Do NOT (never ever!) set "javax.persistence.schema-generation.database.action" here! We instead set it via application.conf -->
+<!--			<property name="javax.persistence.schema-generation.create-source" value="script-then-metadata" />-->
+<!--			<property name="javax.persistence.schema-generation.drop-source" value="metadata" />-->
+<!--			<property name="javax.persistence.schema-generation.scripts.create-target" value="logs/createScript.sql"/>-->
+			<!-- <property name="javax.persistence.schema-generation.scripts.update-target" value="logs/updateScript.sql"/> --><!-- Does not work (yet?) - see HHH-10684 -->
+<!--			<property name="javax.persistence.schema-generation.scripts.drop-target" value="logs/dropScript.sql"/>-->
+			<!-- There are even more javax.persistence.schema-generation.* properties, just google it ;) -->
+<!--			<property name="hibernate.hbm2ddl.delimiter" value=";" />-->
+		</properties>
+	</persistence-unit>
+
+</persistence>

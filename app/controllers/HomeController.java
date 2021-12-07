@@ -1,16 +1,32 @@
 package controllers;
 
-import play.mvc.*;
+import models.Student;
+import play.db.jpa.JPAApi;
+import play.libs.Json;
+import play.mvc.Controller;
 import play.mvc.Http.Request;
+import play.mvc.Result;
+
+import javax.inject.Inject;
 
 public class HomeController extends Controller {
 
-    public Result index() {
-        return ok(views.html.index.render());
+    final JPAApi database;
+
+    @Inject
+    public HomeController(final JPAApi jpaApi) {
+        this.database = jpaApi;
     }
 
-    public Result student(Request request, Integer id) {
-        return ok("hello student");
+    public Result index() {
+        return ok(views.html.index.render()); // index.html an
+    }
+
+    public Result student(final Request request, final Integer id) {
+        final var student= this.database.withTransaction(em -> (em.find(Student.class, id)));
+        student.doSomeBusinessLogic();
+        var studentJSON = Json.toJson(student);
+        return ok(studentJSON);
     }
 
 }

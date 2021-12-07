@@ -1,12 +1,75 @@
 @()
-
 <!DOCTYPE html>
 <html lang="de">
     <head>
         <title>VS Demo</title>
-        <script src="routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/main.js")" ></script>
     </head>
     <body>
-        <h1>Welcome to Play!</h1>
+
+        <h1>1) JavaScript Demo</h1>
+        <div>
+            <p><b>Log:</b></p>
+            <p id="demo_output"></p>
+        </div>
+        <script>
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
+            log('Das Browserfenster hat ' + windowWidth +  'x' + windowHeight + ' pixel');
+
+            var screenWidth = screen.width
+            var screenHeight = screen.height;
+            log('Das Bildschirm hat ' + screenWidth +  'x' + screenHeight + ' pixel');
+
+            var vendor = navigator.vendor;
+            log('Der Hersteller dieses Browsers ist: ' + vendor);
+        </script>
+
+
+
+
+
+
+
+
+
+        <h1>2) DOM Tree Demo</h1>
+
+
+
+
+
+
+
+
+
+
+        <h1>3) Ajax Demo</h1>
+        <p id="student">Wer studiert an der FHTW?</p>
+        <button id="switch_student">Nächster Student</button>
+        <script>
+            var counter = 1;
+            document.getElementById('switch_student').addEventListener('click', function() {
+                var request = new XMLHttpRequest();
+                request.open('GET', '/student?id=' + counter++, true);
+                request.onload = function() {
+                    if (this.status >= 200 && this.status < 400) {
+                        // Success!
+                        var data = JSON.parse(this.response);
+                        document.getElementById('student').innerText = data.firstname + ' ' +  data.lastname + ' (' + data.email + ')';
+                    } else {
+                        // Serve error!
+                        log('Server konnte Anfrage nicht bearbeiten');
+                    }
+                };
+                request.onerror = function() {
+                    // Other problem
+                    log('Konnte Student nicht laden');
+                };
+                request.send();
+            });
+        </script>
+
+        <h1>Security!</h1>
     </body>
 </html>
